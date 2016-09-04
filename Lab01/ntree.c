@@ -43,12 +43,14 @@ void crea_procesos(int nivel){
 			crea_procesos(nivel+1);
 			break;
 		} else {
-			fprintf(stderr, "Nivel %d con pid %d padre %d, Creo proceso %d || Iter: %d\n",nivel+1,getpid(),getppid(), id,i+1);
+			fprintf(stderr, "Nivel %d con pid %d padre %d, Creo proceso %d || Iter: %d\n",nivel,getpid(),getppid(), id,i+1);
 		}
 	}
 	for(int i = 0; i < nivel+1; i++){
 		if (nivel == 1) break;
 		waitpid(-1,NULL,0);
 	}
+	if(nivel > 1)
+		read(fd[0],&padre,sizeof(padre));
 }
 
