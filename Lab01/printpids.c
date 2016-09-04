@@ -9,6 +9,8 @@
 int prof;
 int fd[2], padre;
 
+void ordenar(int* pids, int n);
+
 int main(int argc, char* argv[]){
 	int pids[30];
 	padre = getpid();
