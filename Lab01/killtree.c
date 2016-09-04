@@ -20,9 +20,11 @@ int main (int argc,char* argv[]){
 	padre = getpid();
 	if (argc > 1){
 		prof = atoi(argv[1]);
-		fprintf(stderr,"%d\n",prof);
+		if (prof < 1) return 0;
+		fprintf(stderr,"Niveles: %d\n",prof);
 		cant_jovenes = prof * (prof -1);
-		crea_procesos(1);			
+		if (prof >= 2)
+			crea_procesos(1);			
 	}	
 	if(padre == getpid()){
 		char cmd[50];
@@ -31,6 +33,7 @@ int main (int argc,char* argv[]){
 		system(cmd);
 		int total = calc_total(prof);
 		int pids[200];
+		if(total == 1) return 0;
 		for(int i = 0; i < total; i++){
 			read(fd2[0],&pids[i],sizeof(pids[i]));
 		}

@@ -15,8 +15,10 @@ int main (int argc,char* argv[]){
 	padre = getpid();
 	if (argc > 1){
 		prof = atoi(argv[1]);
+		if(prof < 1) return 0;
 		fprintf(stderr,"%d\n",prof);
-		crea_procesos(1);			
+		if(prof >= 2)
+			crea_procesos(1);			
 	}	
 	if(padre == getpid()){
 		char cmd[50];
