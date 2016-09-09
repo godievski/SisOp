@@ -38,7 +38,7 @@ int main (int argc,char* argv[]){
 		sprintf(cmd,"pstree %d",padre);
 		system(cmd);
 		int total = calc_total(prof);
-		pid_ pids[200];
+		pid_ pids[total+1];
 		if(total == 1) return 0;
 		for(int i = 0; i < total; i++){
 			read(fd2[0],&pids[i],sizeof(pids[i]));
@@ -77,15 +77,14 @@ void crea_procesos(int nivel){
 	if (nivel >= prof){
 		read(fd[0],&padre,sizeof(padre));
 		exit(0);
-		return;
 	}
 	for(int i = 0; i < nivel+1; i++){
 		int id;
-		if (!(id=fork())){/*child*/
+		if (!(id=fork()))/*child*/
 			crea_procesos(nivel+1);
-			break;
-		} else {
-			//fprintf(stderr, "Nivel %d con pid %d padre %d, Creo proceso %d || Iter: %d\n",nivel,getpid(),getppid(), id,i+1);
+		if (id == -1){
+			fprintf(stderr,"ERROR FORK\n");
+			exit(0);
 		}
 	}
 	for(int i = 0; i < nivel+1; i++){
